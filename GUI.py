@@ -154,7 +154,8 @@ class thread(threading.Thread):
     def run(self):
         self.frame.insert('end', '\n开始爬取\n')
         sys.stdout = redirect(self.frame)
-        index.main(self.settings, self.tags, self.discard_tags)
+        # index.main(self.settings, self.tags, self.discard_tags)
+        index.main()
         self.frame.insert('end', '\n爬取结束\n')
         self.frame.see('end')
         sys.stdout = sys.__stdout__
