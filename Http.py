@@ -19,7 +19,7 @@ async def sleep_backoff(sleep_time: int) -> int:
     return sleep_time
 
 
-async def asyncget(session: ClientSession, url: str, special_headers: dict = None, retry_count: int = 10, retry_delay: int = 1) -> tuple[bytes | None, int]:
+async def asyncget(session: ClientSession, url: str,proxy='http://127.0.0.1:7890', special_headers: dict = None, retry_count: int = 10, retry_delay: int = 1) -> tuple[bytes | None, int]:
     """
     HTTP GET获取
     :param session: aiohttp.ClientSession, 复用连接
@@ -31,7 +31,7 @@ async def asyncget(session: ClientSession, url: str, special_headers: dict = Non
     """
     while retry_count:
         try:
-            response = await session.get(url) if special_headers is None else await session.get(url, headers=special_headers.update(headers))
+            response = await session.get(url,proxy=proxy) if special_headers is None else await session.get(url,proxy=proxy, headers=special_headers.update(headers))
             try:
                 return await response.read(), response.content_length
             # 捕获任何错误
